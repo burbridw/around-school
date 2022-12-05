@@ -1,0 +1,154 @@
+*,*::after,*::before {
+    box-sizing: border-box;
+}
+
+:root {
+    --room-border: 6px solid black;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background-color: #0976aa;
+}
+
+.all-school-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    height: 92vh;
+    width: 90vw;
+    background-color: #2ae991;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px 5px black;
+}
+.rooms-container {
+    position: relative;
+}
+.rooms-grid {
+    margin: 0 auto;
+    width: 90%;
+    height: 90%;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: repeat(3,1fr);
+}
+.room-box {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: var(--room-border)
+}
+.mover-grid {
+    position: absolute;
+    top: 22%;
+    left: 9vw;
+    width: 72vw;
+    height: 70vh;
+    display: grid;
+    grid-template-columns: repeat(7,1fr);
+    grid-template-rows: 1fr 0.8fr 1fr 0.8fr 1fr 1fr;
+}
+.mover-grid:nth-child(8),
+.mover-grid:nth-child(9),
+.mover-grid:nth-child(10),
+.mover-grid:nth-child(11),
+.mover-grid:nth-child(12),
+.mover-grid:nth-child(13),
+.mover-grid:nth-child(14) {
+    height: 5vh;
+}
+.mover-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.middle-dot {
+    position: absolute;
+    height: 2vh;
+    width: 2vh;
+    bottom: -12%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: blue;
+}
+.corner-dot {
+    position: absolute;
+    height: 2vh;
+    width: 2vh;
+    bottom: -12%;
+    right: -6%;
+    transform: translate(-50%,-50%);
+    background-color: blue;
+    z-index: 3;
+}
+.room-box:nth-child(1),
+.room-box:nth-child(2),
+.room-box:nth-child(3),
+.room-box:nth-child(5),
+.room-box:nth-child(6),
+.room-box:nth-child(7),
+.room-box:nth-child(9),
+.room-box:nth-child(10),
+.room-box:nth-child(11) {
+    border-right: var(--room-border)
+}
+.room-box:nth-child(4) .corner-dot,
+.room-box:nth-child(8) .corner-dot,
+.room-box:nth-child(12) .corner-dot {
+    background-color: transparent;
+}
+.rooms-grid img {
+    margin-top: 5px;
+    height: 100%;
+    max-height: 20vh;
+    max-width: 20vw;
+}
+.entrance-container {
+    margin-left: 25vw;
+    width: 20vw;
+    height: 20%;
+    border-right: var(--room-border)
+}
+.entrance {
+    position: relative;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+.entrance .corner-dot {
+    bottom: 0%;
+    right: -9%;
+    height: 3vh;
+    width: 3vh;
+    background-color: red;
+}
+.entrance img {
+    height: 100%;
+    max-height: 20vh;
+    max-width: 20vw;
+}
+
+.mover {
+    height: 100%;
+    max-height: 15vh;
+    z-index: 10;
+}
+
+.west {
+    transform: rotate(-90deg);
+}
+.east {
+    transform: rotate(90deg);
+}
+.north {
+    transform: rotate(0deg);
+}
+.south {
+    transform: rotate(180deg);
+}
