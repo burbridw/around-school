@@ -21,6 +21,13 @@ const roomsObj = {
     "restroom": "./images/school/img11.png",
     "entrance": "./images/school/img10.png",
 }
+const moverObj = {
+    "elephant": "./images/movers/elephant.png",
+    "redcar": "./images/movers/redcar.png",
+    "bicycle": "./images/movers/bicycle.png",
+    "policecar": "./images/movers/policecar.png",
+    "fighterjet": "./images/movers/fighterjet.png",
+}
 start()
 
 function start() {
@@ -40,8 +47,10 @@ function start() {
     `
 }
 
-movers()
 
+
+let theMover = moverObj["fighterjet"]
+movers()
 function movers() {
     for ( let i = 0; i < 42; i++ ) {
         moverGrid.innerHTML += `
@@ -58,7 +67,7 @@ function movers() {
         moverGrid.children[i].classList.add("can-move")
     }
     moverGrid.children[38].innerHTML += `
-    <img class="mover north" src="./images/movers/elephant.png">
+    <img class="mover north" src="${theMover}">
     `
 }
 
@@ -104,7 +113,7 @@ function getMoverPos() {
         moverGrid.children[moverPosition-7].classList.add("ishere")
         moverGrid.children[moverPosition].innerHTML = ""
         moverGrid.children[moverPosition-7].innerHTML =`
-        <img class="mover north" src="./images/movers/elephant.png">
+        <img class="mover north" src="${theMover}">
         `
         moverPosition -= 7
     } else if ( mover.classList.contains("north") ) {
@@ -113,7 +122,7 @@ function getMoverPos() {
             moverGrid.children[moverPosition-14].classList.add("ishere")
             moverGrid.children[moverPosition].innerHTML = ""
             moverGrid.children[moverPosition-14].innerHTML =`
-            <img class="mover north" src="./images/movers/elephant.png">
+            <img class="mover north" src="${theMover}">
             `
             moverPosition -= 14
         }
@@ -123,7 +132,7 @@ function getMoverPos() {
             moverGrid.children[moverPosition-1].classList.add("ishere")
             moverGrid.children[moverPosition].innerHTML = ""
             moverGrid.children[moverPosition-1].innerHTML =`
-            <img class="mover west" src="./images/movers/elephant.png">
+            <img class="mover west" src="${theMover}">
             `
             moverPosition -= 1
         }
@@ -133,7 +142,7 @@ function getMoverPos() {
             moverGrid.children[moverPosition+1].classList.add("ishere")
             moverGrid.children[moverPosition].innerHTML = ""
             moverGrid.children[moverPosition+1].innerHTML =`
-            <img class="mover east" src="./images/movers/elephant.png">
+            <img class="mover east" src="${theMover}">
             `
             moverPosition += 1
         }
@@ -143,7 +152,7 @@ function getMoverPos() {
             moverGrid.children[moverPosition+14].classList.add("ishere")
             moverGrid.children[moverPosition].innerHTML = ""
             moverGrid.children[moverPosition+14].innerHTML =`
-            <img class="mover south" src="./images/movers/elephant.png">
+            <img class="mover south" src="${theMover}">
             `
             moverPosition += 14
         }
