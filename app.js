@@ -1,10 +1,13 @@
 const roomsGrid = document.querySelector(".rooms-grid")
 const moverGrid = document.querySelector(".mover-grid")
 const entrance = document.querySelector(".entrance")
+const charSelect = document.querySelector(".char-window")
 
 let gameActive = false
 let secret = false
+let treasureLoc = ""
 let moverPosition = 38
+let currentMover = 0
 
 const allRoomsArr = ["./images/school/img1.png","./images/school/img2.png", "./images/school/img3.png", "./images/school/img4.png", "./images/school/img5.png", "./images/school/img6.png", "./images/school/img7.png", "./images/school/img8.png", "./images/school/img9.png", "./images/school/img10.png", "./images/school/img11.png", "./images/school/img12.png", "./images/school/img13.png", "./images/school/img14.png", "./images/school/img15.png", "./images/school/img16.png"]
 const numbersArr = ["./images/numbers/img1.png","./images/numbers/img2.png", "./images/numbers/img3.png", "./images/numbers/img4.png", "./images/numbers/img5.png", "./images/numbers/img6.png", "./images/numbers/img7.png", "./images/numbers/img8.png", "./images/numbers/img9.png", "./images/numbers/img10.png", "./images/numbers/img11.png", "./images/numbers/img12.png"]
@@ -25,22 +28,49 @@ const roomsObj = {
     "entrance": "./images/school/img10.png",
 }
 const moverObj = {
+    "person": "./images/movers/person.png",
     "elephant": "./images/movers/elephant.png",
     "redcar": "./images/movers/redcar.png",
     "bicycle": "./images/movers/bicycle.png",
     "policecar": "./images/movers/policecar.png",
-    "fighterjet": "./images/movers/fighterjet.png",
+    "fighterjet": "./images/movers/fighterjet.png"
 }
+let theMover = Object.values(moverObj)[currentMover]
 
 const entryObj = {
     0: 0, 2: 1, 4: 2, 6: 3, 14: 4, 16: 5, 18: 6, 20: 7, 28: 8, 30: 9, 32: 10, 34: 11
 }
 
-let theMover = moverObj["elephant"]
+
+
+function buildCharSelect() {
+    theMover = Object.values(moverObj)[currentMover]
+    charSelect.innerHTML = `
+    <div class="current-char"><img src="${theMover}"></div>`
+}
+buildCharSelect()
+
+function changeChar() {
+    if ( currentMover < Object.keys(moverObj).length-1 ) {
+        currentMover++
+    } else {
+        currentMover = 0
+    }
+    theMover = Object.values(moverObj)[currentMover]
+    charSelect.innerHTML = `
+    <div class="current-char"><img src="${theMover}"></div>`
+    document.querySelector(".mover").src = theMover
+}
+
 
 const practiceBtn = document.querySelector(".practice")
 const treasureBtn = document.querySelector(".treasure")
 const secretBtn = document.querySelector(".secret")
+const leftBtn = document.querySelector(".left")
+const straightBtn = document.querySelector(".straight")
+const rightBtn = document.querySelector(".right")
+
+charSelect.addEventListener("click",changeChar)
 
 practiceBtn.addEventListener("click",()=>{
     if ( !practiceBtn.classList.contains("toggleon") ) {
@@ -63,12 +93,16 @@ secretBtn.addEventListener("click",()=>{
     }
     startSecret()
 })
+leftBtn.addEventListener("click",left)
+straightBtn.addEventListener("click",forward)
+rightBtn.addEventListener("click",right)
 
 startPractice()
 
 function startPractice() {
     gameActive = false
     secret = false
+    treasureLoc = ""
     roomsGrid.innerHTML = ""
     for ( let i = 0; i < 12; i++) {
         roomsGrid.innerHTML += 
@@ -92,6 +126,7 @@ function startPractice() {
 function startTreasure() {
     gameActive = true
     secret = false
+    treasureLoc = ""
     roomsGrid.innerHTML = ""
     for ( let i = 0; i < 12; i++) {
         roomsGrid.innerHTML += 
@@ -110,8 +145,7 @@ function startTreasure() {
     let getRandom = Math.floor( Math.random()*12 )
     let allBack = document.querySelectorAll(".flipper-back")
     allBack[getRandom].innerHTML = `<img src="./images/commonitems/img20.png">`
-    console.log(getRandom)
-
+    treasureLoc = getRandom
     entrance.innerHTML = `
     <img src="${roomsObj["entrance"]}">
     `
@@ -177,40 +211,19 @@ function movers() {
 addEventListener("keydown", (x) => {
     let mover = document.querySelector(".mover")
     if (x.key === "ArrowUp") {
-        console.log("up")
-        getMoverPos()
+        forward()
     } else if ( x.key === "ArrowLeft" ) {
-        if (mover.classList.contains("north") ) {
-            mover.classList.remove("north")
-            mover.classList.add("west")
-        } else if ( mover.classList.contains("west") ) {
-            mover.classList.remove("west")
-            mover.classList.add("south")
-        } else if ( mover.classList.contains("south") ) {
-            mover.classList.remove("south")
-            mover.classList.add("east")
-        } else if ( mover.classList.contains("east") ) {
-            mover.classList.remove("east")
-            mover.classList.add("north")
-        }
+        left()
     } else if ( x.key === "ArrowRight" ) {
-        if (mover.classList.contains("north") ) {
-            mover.classList.remove("north")
-            mover.classList.add("east")
-        } else if ( mover.classList.contains("east") ) {
-            mover.classList.remove("east")
-            mover.classList.add("south")
-        } else if ( mover.classList.contains("south") ) {
-            mover.classList.remove("south")
-            mover.classList.add("west")
-        } else if ( mover.classList.contains("west") ) {
-            mover.classList.remove("west")
-            mover.classList.add("north")
-        }
+        right()
     }
 })
 
-function getMoverPos() {
+function forward() {
+    straightBtn.classList.add("whiten")
+    setTimeout(()=>{
+        straightBtn.classList.remove("whiten")
+    },300)
     let mover = document.querySelector(".mover")
     if ( moverPosition === 38 && mover.classList.contains("north") ) {
         moverGrid.children[moverPosition-7].classList.add("ishere")
@@ -224,7 +237,7 @@ function getMoverPos() {
             let entryPoint = entryObj[moverPosition]
             if ( gameActive ) {
                 roomsGrid.children[entryPoint].children[0].style.transform = "rotatex(180deg)"
-                if ( !secret ) {
+                if ( !secret && entryPoint != treasureLoc ) {
                 setTimeout( ()=>{
                     roomsGrid.children[entryPoint].children[0].style.transform = "rotatex(0deg)"
                 },2000)
@@ -284,5 +297,45 @@ function getMoverPos() {
             `
             moverPosition += 14
         }
+    }
+}
+function left() {
+    leftBtn.classList.add("whiten")
+    setTimeout(()=>{
+        leftBtn.classList.remove("whiten")
+    },300)
+    let mover = document.querySelector(".mover")
+    if (mover.classList.contains("north") ) {
+        mover.classList.remove("north")
+        mover.classList.add("west")
+    } else if ( mover.classList.contains("west") ) {
+        mover.classList.remove("west")
+        mover.classList.add("south")
+    } else if ( mover.classList.contains("south") ) {
+        mover.classList.remove("south")
+        mover.classList.add("east")
+    } else if ( mover.classList.contains("east") ) {
+        mover.classList.remove("east")
+        mover.classList.add("north")
+    }
+}
+function right() {
+    rightBtn.classList.add("whiten")
+    setTimeout(()=>{
+        rightBtn.classList.remove("whiten")
+    },300)
+    let mover = document.querySelector(".mover")
+    if (mover.classList.contains("north") ) {
+        mover.classList.remove("north")
+        mover.classList.add("east")
+    } else if ( mover.classList.contains("east") ) {
+        mover.classList.remove("east")
+        mover.classList.add("south")
+    } else if ( mover.classList.contains("south") ) {
+        mover.classList.remove("south")
+        mover.classList.add("west")
+    } else if ( mover.classList.contains("west") ) {
+        mover.classList.remove("west")
+        mover.classList.add("north")
     }
 }

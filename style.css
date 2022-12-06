@@ -47,7 +47,7 @@ body {
 }
 .mover-grid {
     position: absolute;
-    top: 22%;
+    top: 20%;
     left: 9vw;
     width: 72vw;
     height: 75vh;
@@ -70,26 +70,6 @@ body {
     align-items: center;
 }
 
-
-.middle-dot {
-    position: absolute;
-    height: 2vh;
-    width: 2vh;
-    bottom: -12%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    background-color: blue;
-}
-.corner-dot {
-    position: absolute;
-    height: 2vh;
-    width: 2vh;
-    bottom: -12%;
-    right: -6%;
-    transform: translate(-50%,-50%);
-    background-color: blue;
-    z-index: 3;
-}
 .room-box:nth-child(1),
 .room-box:nth-child(2),
 .room-box:nth-child(3),
@@ -114,14 +94,36 @@ body {
 }
 .lower-container {
     width: 100%;
-    height: 20%;
+    height: 25%;
     display: flex;
 }
-.entrance-container {
+.lower-left-container {
     width: 50%;
+    display: flex;
     border-right: var(--room-border);
 }
+.char-select {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.char-window {
+    width: 10vw;
+    height: 10vw;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: var(--card-shadow);
+}
+.char-window img {
+    height: 100%;
+    max-height: 10vw;
+}
+
 .entrance {
+    width: 50%;
     display: flex;
     justify-content: right;
     align-items: center;
@@ -136,17 +138,48 @@ body {
     display: flex;
     justify-content: right;    
 }
+.mover-control-container {
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+}
+.mover-control {
+    height: 50%;
+    width: 25%;
+    margin-top: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: var(--card-shadow);
+    border-radius: 5px;
+    background-color: var(--back-color1);
+    z-index: 10;
+}
+.mover-control:nth-last-of-type(2) {
+    margin-top: 5vh;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.mover-control img {
+    height: 100%;
+    max-height: 15vh;
+}
+.whiten {
+    box-shadow: 1px 1px 3px 2px white;
+}
 .game-mode-button-container {
     height: 100%;
+    width: 50%;
     padding-top: 10px;
     display: flex;
     flex-direction: column;
     width: 50%;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
+    z-index: 5;
 }
 .mode {
-    height: 40%;
+    height: 25%;
     width: 80%;
     border-radius: 10px;
     box-shadow: var(--card-shadow);
