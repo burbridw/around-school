@@ -4,13 +4,16 @@
 
 :root {
     --room-border: 6px solid black;
+    --back-color1: #0976aa;
+    --back-color2: #2ae991;
+    --card-shadow: 1px 1px 2px 1px black;
 }
 
 body {
     height: 100%;
     width: 100%;
     overflow: hidden;
-    background-color: #0976aa;
+    background-color: var(--back-color1)
 }
 
 .all-school-container {
@@ -20,7 +23,7 @@ body {
     transform: translate(-50%,-50%);
     height: 92vh;
     width: 90vw;
-    background-color: #2ae991;
+    background-color: var(--back-color2);
     border-radius: 10px;
     box-shadow: 5px 5px 10px 5px black;
 }
@@ -47,7 +50,7 @@ body {
     top: 22%;
     left: 9vw;
     width: 72vw;
-    height: 70vh;
+    height: 75vh;
     display: grid;
     grid-template-columns: repeat(7,1fr);
     grid-template-rows: 1fr 0.8fr 1fr 0.8fr 1fr 1fr;
@@ -109,29 +112,98 @@ body {
     max-height: 20vh;
     max-width: 20vw;
 }
-.entrance-container {
-    margin-left: 25vw;
-    width: 20vw;
+.lower-container {
+    width: 100%;
     height: 20%;
-    border-right: var(--room-border)
+    display: flex;
+}
+.entrance-container {
+    width: 50%;
+    border-right: var(--room-border);
 }
 .entrance {
-    position: relative;
     display: flex;
     justify-content: right;
     align-items: center;
-}
-.entrance .corner-dot {
-    bottom: 0%;
-    right: -9%;
-    height: 3vh;
-    width: 3vh;
-    background-color: red;
 }
 .entrance img {
     height: 100%;
     max-height: 20vh;
     max-width: 20vw;
+}
+.lower-right-container {
+    width: 50%;
+    display: flex;
+    justify-content: right;    
+}
+.game-mode-button-container {
+    height: 100%;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    justify-content: space-between;
+    align-items: center;
+}
+.mode {
+    height: 40%;
+    width: 80%;
+    border-radius: 10px;
+    box-shadow: var(--card-shadow);
+    background-color: var(--back-color1);
+    color: white; 
+}
+.toggleon {
+    background-color: yellow;
+    color: black;
+}
+
+.flipper {
+    position: relative;
+    z-index: 10;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
+}
+.flipper-front img {
+    box-shadow: var(--card-shadow);
+}
+
+.flipper-front .secret-mode {
+    background-color: var(--back-color1);
+    height: 100%;
+    width: 90%;
+    max-height: 20vh;
+    max-width: 20vw;
+}
+
+.flipper-back {
+    position: absolute;
+    background-color:  var(--back-color1);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    height: 100%;
+    width: 90%;
+    max-height: 20vh;
+    max-width: 20vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flipper-front, .flipper-back {
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
+}
+.flipper-back {
+    box-shadow: var(--card-shadow);
+    transform: translate(-50%,-50%) rotatex(180deg);
+}
+.secret-mode {
+    background-color: var(--back-color2);
+    box-shadow: none;
 }
 
 .mover {
@@ -151,4 +223,9 @@ body {
 }
 .south {
     transform: rotate(180deg);
+}
+
+.highlight {
+    box-shadow: 0 0 12px 20px gold;
+    transition: all 0.3s linear;
 }
